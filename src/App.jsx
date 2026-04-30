@@ -6,6 +6,7 @@ import GooeyNav from './component/GooeyNav';
 import About from './component/About';
 import Experiences from './component/Experiences';
 import Projects from './component/Projects';
+import Contact from './component/Contact';
 import { ErrorBoundary } from './component/ErrorBoundary';
 import profilePic from './assets/ibrahimethemkurtpp.svg';
 
@@ -17,7 +18,7 @@ const navItems = [
   { label: 'İletişim', href: '#iletisim' }
 ];
 
-const SECTION_IDS = ['hero', 'hakkinda', 'deneyimler'];
+const SECTION_IDS = ['hero', 'hakkinda', 'deneyimler', 'projeler', 'iletisim'];
 
 function App() {
   const mainRef = useRef(null);
@@ -133,6 +134,29 @@ function App() {
         <GooeyNav items={navItems} />
       </div>
 
+      {/* Global Scroll Indicator (Bottom Right) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.5 }}
+        className="fixed bottom-10 right-8 md:right-16 z-50 flex flex-row items-center gap-4 pointer-events-none"
+      >
+        <motion.span
+          animate={{ opacity: [0.3, 0.8, 0.3] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          className="text-[10px] md:text-xs font-light uppercase tracking-[0.3em] text-white/80 select-none text-right"
+        >
+          Keşfetmek İçin Kaydırın
+        </motion.span>
+        <div className="w-[20px] h-[34px] rounded-[10px] border-[1.5px] border-white/40 flex justify-center pt-[4px]">
+          <motion.div
+            animate={{ y: [0, 8, 0], opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-[2px] h-[6px] bg-white rounded-full"
+          />
+        </div>
+      </motion.div>
+
       {/* Dynamic Light Rays Background (Fixed) */}
       <div className="fixed inset-0 z-0 opacity-50 pointer-events-none">
         <LightRays
@@ -190,29 +214,6 @@ function App() {
             />
           </motion.div>
         </motion.div>
-
-        {/* Scroll Indicator (Bottom Right) */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.5 }}
-          className="absolute bottom-10 right-8 md:right-16 z-40 flex flex-row items-center gap-4 pointer-events-none"
-        >
-          <motion.span
-            animate={{ opacity: [0.3, 0.8, 0.3] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            className="text-[10px] md:text-xs font-light uppercase tracking-[0.3em] text-white/80 select-none text-right"
-          >
-            Keşfetmek İçin Kaydırın
-          </motion.span>
-          <div className="w-[20px] h-[34px] rounded-[10px] border-[1.5px] border-white/40 flex justify-center pt-[4px]">
-            <motion.div
-              animate={{ y: [0, 8, 0], opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="w-[2px] h-[6px] bg-white rounded-full"
-            />
-          </div>
-        </motion.div>
       </section>
 
       {/* ==================== ABOUT SECTION ==================== */}
@@ -223,6 +224,9 @@ function App() {
 
       {/* ==================== PROJECTS SECTION ==================== */}
       <Projects />
+
+      {/* ==================== CONTACT SECTION ==================== */}
+      <Contact />
 
     </main>
     </ErrorBoundary>
