@@ -1,0 +1,18 @@
+FROM node:20
+
+WORKDIR /app
+
+# Paket dosyalarını kopyala
+COPY package*.json ./
+
+# Bağımlılıkları yükle
+RUN npm install
+
+# Proje dosyalarını kopyala
+COPY . .
+
+# Vite'in kullandığı port
+EXPOSE 5173
+
+# Geliştirme sunucusunu başlat (host'u 0.0.0.0 yaparak dışarıdan erişime açıyoruz)
+CMD ["npm", "run", "dev", "--", "--host"]

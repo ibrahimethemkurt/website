@@ -1,0 +1,8 @@
+node_modules
+dist
+.git
+.env
+.cursorrules
+Dockerfile
+Dockerfile.dev
+docker-compose.yml

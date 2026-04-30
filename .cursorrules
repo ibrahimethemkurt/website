@@ -1,0 +1,13 @@
+Her zaman styling için Tailwind CSS kullan.
+Kodları olabildiğince modüler tut (her bölüm için ayrı Component oluştur).
+Animasyonlar için Framer Motion kullan. İlerleyen süreçlerde farklı animasyon kütüphaneleri kuracağız.
+Bana uzun uzun ne yaptığını anlatma, doğrudan hatasız ve tam çalışan kod bloğunu ver.
+
+# --- PROJE BAĞLAMI VE MİMARİ NOTLARI (CONTEXT ENGINEER İÇİN) ---
+1. **Tema ve Tasarım Sistemi:** Siyah-beyaz, "Apple stili" devasa ve asimetrik tipografiye sahip, son derece premium, kurumsal ve minimalist (Dark Mode) bir portfolyo tasarımı izlenmektedir. Yeni eklenecek parçalar bu minimalist akışa (Gooey, Glassmorphism, ince beyaz çizgiler, kalın başlıklar) uymalıdır.
+2. **Kaydırma (Scroll) Mimarisi:** Ana sayfa, serbest kaydırma yerine tam ekran geçişleri sağlamak için Native CSS Scroll Snapping (`snap-y snap-mandatory` ana dilde, `snap-start` her bir `<section>` etiketinde) kullanmaktadır. Sayfalar arası geçişin "mıknatıs" gibi yapışması hedeflenmiştir.
+3. **Kritik Bileşenler (Components):** 
+   - `GooeyNav.jsx`: Sitenin en üstünde sabit (fixed) ve cam (backdrop-blur) içerisinde çalışan menüdür. Siyah kare CSS hatasını engellemek için kodun içerisine Pure SVG Filter `<filter id="gooey">` entegre edilmiştir.
+   - `ScrollVelocity.jsx`: Sürekli akan (Framer Marquee) arka plan metinleridir.
+   - `LightRays.jsx`: Mouse'u takip eden dinamik WebGL tabanlı ışık hüzmeleridir. 
+4. **Animasyon Mantığı:** Ekrandaki hiçbir şey statik ve "pat" diye gelmemelidir. Yazılar; Framer Motion özellikleri olan `whileInView`, `viewport={{ once: true, amount: 0.15 }}` ve `staggerChildren` metodları ile şeffaflıktan kaymaya (fade-up/reveal) şeklinde süzülerek gelmelidir.
