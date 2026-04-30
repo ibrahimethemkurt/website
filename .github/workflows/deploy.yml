@@ -1,0 +1,33 @@
+name: Deploy Portfolio to cPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Kodları Al
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Node.js Kurulumu
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📦 Paketleri Yükle
+        run: npm install
+
+      - name: 🛠️ Projeyi Build Et (Paketle)
+        run: npm run build
+
+      - name: 🚀 FTP ile cPanel'e Yükle
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ./
