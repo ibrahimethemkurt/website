@@ -1,14 +1,15 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useCallback, Suspense, lazy } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import LightRays from './components/LightRays';
 import ScrollVelocity from './component/ScrollVelocity';
 import GooeyNav from './component/GooeyNav';
-import About from './component/About';
-import Experiences from './component/Experiences';
-import Projects from './component/Projects';
-import Contact from './component/Contact';
 import { ErrorBoundary } from './component/ErrorBoundary';
 import profilePic from './assets/ibrahimethemkurtpp.svg';
+
+const About = lazy(() => import('./component/About'));
+const Experiences = lazy(() => import('./component/Experiences'));
+const Projects = lazy(() => import('./component/Projects'));
+const Contact = lazy(() => import('./component/Contact'));
 
 const navItems = [
   { label: 'Anasayfa', href: '#hero' },
@@ -221,16 +222,24 @@ function App() {
         </section>
 
         {/* ==================== ABOUT SECTION ==================== */}
-        <About />
+        <Suspense fallback={<div className="h-[100dvh] w-full bg-background" />}>
+          <About />
+        </Suspense>
 
         {/* ==================== EXPERIENCES SECTION ==================== */}
-        <Experiences onScrollPastEdge={handleCarouselEdge} />
+        <Suspense fallback={<div className="h-[100dvh] w-full bg-background" />}>
+          <Experiences onScrollPastEdge={handleCarouselEdge} />
+        </Suspense>
 
         {/* ==================== PROJECTS SECTION ==================== */}
-        <Projects />
+        <Suspense fallback={<div className="h-[100dvh] w-full bg-background" />}>
+          <Projects />
+        </Suspense>
 
         {/* ==================== CONTACT SECTION ==================== */}
-        <Contact />
+        <Suspense fallback={<div className="h-[100dvh] w-full bg-background" />}>
+          <Contact />
+        </Suspense>
 
       </main>
     </ErrorBoundary>
