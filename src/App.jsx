@@ -27,6 +27,27 @@ function App() {
   const [currentSection, setCurrentSection] = useState(0);
   const isScrolling = useRef(false);
 
+  // Sayfa yüklendiğinde URL'deki hash'e göre git
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    const index = SECTION_IDS.indexOf(hash);
+    if (index !== -1) {
+      setCurrentSection(index);
+      setTimeout(() => {
+        const target = document.getElementById(SECTION_IDS[index]);
+        if (target && mainRef.current) {
+          mainRef.current.scrollTop = target.offsetTop;
+        }
+      }, 100);
+    }
+  }, []);
+
+  // currentSection değiştikçe URL'i temiz tut/güncelle
+  useEffect(() => {
+    const hash = currentSection === 0 ? window.location.pathname : `#${SECTION_IDS[currentSection]}`;
+    window.history.replaceState(null, null, hash);
+  }, [currentSection]);
+
   // Yavaş, kontrollü bölüm geçişi
   const scrollToSection = useCallback((index) => {
     if (isScrolling.current || !mainRef.current) return;
