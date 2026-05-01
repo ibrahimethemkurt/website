@@ -293,7 +293,7 @@ const GooeyNav = ({
         <nav className="flex relative" style={{ transform: 'translate3d(0,0,0.01px)' }}>
           <ul
             ref={navRef}
-            className="flex gap-8 list-none p-0 px-4 m-0 relative z-[3]"
+            className="flex gap-2 md:gap-8 list-none p-0 px-2 md:px-4 m-0 relative z-[3] text-[12px] sm:text-[14px] md:text-base"
             style={{
               color: 'white',
               textShadow: '0 1px 1px hsl(205deg 30% 10% / 0.2)'

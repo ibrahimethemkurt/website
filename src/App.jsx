@@ -4,7 +4,7 @@ import LightRays from './components/LightRays';
 import ScrollVelocity from './component/ScrollVelocity';
 import GooeyNav from './component/GooeyNav';
 import { ErrorBoundary } from './component/ErrorBoundary';
-import profilePic from './assets/ibrahimethemkurtpp.svg';
+import profilePic from './assets/profilePic.webp';
 
 const About = lazy(() => import('./component/About'));
 const Experiences = lazy(() => import('./component/Experiences'));
@@ -221,7 +221,7 @@ function App() {
                 numCopies={6}
                 parallaxClassName="relative overflow-hidden w-full"
                 scrollerClassName="flex whitespace-nowrap text-center drop-shadow-sm"
-                className="noto-serif-dives-akuru-regular text-[40px] tracking-normal leading-normal pointer-events-none opacity-40 shrink-0"
+                className="noto-serif-dives-akuru-regular text-[26px] md:text-[40px] tracking-normal leading-normal pointer-events-none opacity-40 shrink-0"
               />
             </div>
 
@@ -235,7 +235,7 @@ function App() {
               <img
                 src={profilePic}
                 alt="İbrahim Ethem Kurt"
-                className="h-[75vh] w-auto object-contain object-bottom drop-shadow-2xl grayscale"
+                className="h-[60vh] md:h-[75vh] w-auto object-contain object-bottom drop-shadow-2xl grayscale"
                 draggable="false"
               />
             </motion.div>
