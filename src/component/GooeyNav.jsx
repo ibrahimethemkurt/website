@@ -8,7 +8,9 @@ const GooeyNav = ({
   particleR = 100,
   timeVariance = 300,
   colors = [1, 2, 3, 1, 2, 3, 1, 4],
-  initialActiveIndex = 0
+  initialActiveIndex = 0,
+  externalActiveIndex = null,
+  onNavClick = null
 }) => {
   const containerRef = useRef(null);
   const navRef = useRef(null);
@@ -84,8 +86,14 @@ const GooeyNav = ({
     textRef.current.innerText = element.innerText;
   };
   const handleClick = (e, index) => {
-    const liEl = e.currentTarget;
+    e.preventDefault();
+    const liEl = e.currentTarget.closest('li') || e.currentTarget;
     if (activeIndex === index) return;
+    
+    if (onNavClick) {
+      onNavClick(index);
+    }
+    
     setActiveIndex(index);
     updateEffectPosition(liEl);
     if (filterRef.current) {
@@ -126,6 +134,27 @@ const GooeyNav = ({
     resizeObserver.observe(containerRef.current);
     return () => resizeObserver.disconnect();
   }, [activeIndex]);
+
+  // Sync with external state
+  useEffect(() => {
+    if (externalActiveIndex !== null && externalActiveIndex !== activeIndex) {
+      setActiveIndex(externalActiveIndex);
+      const targetLi = navRef.current?.querySelectorAll('li')[externalActiveIndex];
+      if (targetLi) {
+        updateEffectPosition(targetLi);
+        if (filterRef.current) {
+          const particles = filterRef.current.querySelectorAll('.particle');
+          particles.forEach(p => filterRef.current.removeChild(p));
+          makeParticles(filterRef.current);
+        }
+        if (textRef.current) {
+          textRef.current.classList.remove('active');
+          void textRef.current.offsetWidth;
+          textRef.current.classList.add('active');
+        }
+      }
+    }
+  }, [externalActiveIndex]);
 
   return (
     <>

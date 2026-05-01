@@ -23,7 +23,7 @@ const Contact = () => {
           <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
         </svg>
       ),
-      url: 'https://www.instagram.com/ibrahimethemkurtt/',
+      url: 'https://www.instagram.com/ibrahimethemkurtcom/',
     },
     {
       name: 'E-posta',
@@ -63,7 +63,7 @@ const Contact = () => {
 
       {/* İçerik */}
       <div className="relative z-20 flex flex-col items-center justify-center w-full h-full p-8">
-        
+
         {/* Başlık */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -101,9 +101,9 @@ const Contact = () => {
             </motion.a>
           ))}
         </div>
-        
+
       </div>
-      
+
     </section>
   );
 };

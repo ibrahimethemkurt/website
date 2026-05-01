@@ -84,9 +84,9 @@ function App() {
       if (currentSection === 2) return;
 
       e.preventDefault();
-      
+
       const wasLocked = localLock;
-      
+
       // Her wheel event'inde kilidi tazele
       localLock = true;
       clearTimeout(lockTimeout);
@@ -123,112 +123,116 @@ function App() {
 
   return (
     <ErrorBoundary>
-    <main
-      ref={mainRef}
-      className="relative w-full h-[100dvh] overflow-y-auto overflow-x-hidden bg-background text-foreground font-sans selection:bg-white/20"
-      style={{ scrollBehavior: 'auto' }}
-    >
-
-      {/* Floating Navigation */}
-      <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 rounded-full px-2 py-1 bg-black/10 backdrop-blur-xl border border-white/10 drop-shadow-2xl">
-        <GooeyNav items={navItems} />
-      </div>
-
-      {/* Global Scroll Indicator (Bottom Right) */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="fixed bottom-10 right-8 md:right-16 z-50 flex flex-row items-center gap-4 pointer-events-none"
+      <main
+        ref={mainRef}
+        className="relative w-full h-[100dvh] overflow-y-auto overflow-x-hidden bg-background text-foreground font-sans selection:bg-white/20"
+        style={{ scrollBehavior: 'auto' }}
       >
-        <motion.span
-          animate={{ opacity: [0.3, 0.8, 0.3] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          className="text-[10px] md:text-xs font-light uppercase tracking-[0.3em] text-white/80 select-none text-right"
-        >
-          Keşfetmek İçin Kaydırın
-        </motion.span>
-        <div className="w-[20px] h-[34px] rounded-[10px] border-[1.5px] border-white/40 flex justify-center pt-[4px]">
-          <motion.div
-            animate={{ y: [0, 8, 0], opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-[2px] h-[6px] bg-white rounded-full"
+
+        {/* Floating Navigation */}
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 rounded-full px-2 py-1 bg-black/10 backdrop-blur-xl border border-white/10 drop-shadow-2xl">
+          <GooeyNav 
+            items={navItems} 
+            externalActiveIndex={currentSection}
+            onNavClick={scrollToSection}
           />
         </div>
-      </motion.div>
 
-      {/* Dynamic Light Rays Background (Fixed) */}
-      <div className="fixed inset-0 z-0 opacity-50 pointer-events-none">
-        <LightRays
-          raysOrigin="top-center"
-          raysColor="#666666"
-          raysSpeed={0.5}
-          lightSpread={1.5}
-          fadeDistance={0.8}
-          followMouse={true}
-          noiseAmount={0.2}
-        />
-      </div>
-
-      {/* ==================== HERO SECTION ==================== */}
-      <section
-        ref={heroRef}
-        id="hero"
-        className="snap-start relative min-h-[100dvh] w-full flex flex-col items-center justify-end overflow-hidden"
-      >
+        {/* Global Scroll Indicator (Bottom Right) */}
         <motion.div
-          style={{
-            opacity: heroOpacity,
-            scale: heroScale,
-            filter: useTransform(heroBlur, (v) => `blur(${v}px)`),
-          }}
-          className="absolute inset-0 flex flex-col items-center justify-end"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: currentSection === SECTION_IDS.length - 1 ? 0 : 1 }}
+          transition={{ duration: 1, delay: currentSection === 0 ? 1.5 : 0 }}
+          className="fixed bottom-10 right-8 md:right-16 z-50 flex flex-row items-center gap-4 pointer-events-none"
         >
-          {/* Scrolling Background Text */}
-          <div className="absolute top-[52%] left-0 w-full -translate-y-1/2 z-10 select-none overflow-hidden flex flex-col items-center justify-center whitespace-nowrap space-y-2">
-            <ScrollVelocity
-              texts={[
-                "İbrahim Ethem Kurt  •  İbrahim Ethem Kurt  •  İbrahim Ethem Kurt  •  İbrahim Ethem Kurt  •",
-                "Dijital Pazarlama • Community Manager • Proje Yöneticisi  •"
-              ]}
-              velocity={30}
-              numCopies={6}
-              parallaxClassName="relative overflow-hidden w-full"
-              scrollerClassName="flex whitespace-nowrap text-center drop-shadow-sm"
-              className="noto-serif-dives-akuru-regular text-[40px] tracking-normal leading-normal pointer-events-none opacity-40 shrink-0"
+          <motion.span
+            animate={{ opacity: [0.3, 0.8, 0.3] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            className="text-[10px] md:text-xs font-light uppercase tracking-[0.3em] text-white/80 select-none text-right"
+          >
+            Keşfetmek İçin Kaydırın
+          </motion.span>
+          <div className="w-[20px] h-[34px] rounded-[10px] border-[1.5px] border-white/40 flex justify-center pt-[4px]">
+            <motion.div
+              animate={{ y: [0, 8, 0], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="w-[2px] h-[6px] bg-white rounded-full"
             />
           </div>
-
-          {/* Center Image */}
-          <motion.div
-            initial={{ opacity: 0, filter: "blur(20px)" }}
-            animate={{ opacity: 1, filter: "blur(0px)" }}
-            transition={{ duration: 1.2, ease: 'easeOut', delay: 0.1 }}
-            className="relative z-20 flex justify-center items-end"
-          >
-            <img
-              src={profilePic}
-              alt="İbrahim Ethem Kurt"
-              className="h-[75vh] w-auto object-contain object-bottom drop-shadow-2xl grayscale"
-              draggable="false"
-            />
-          </motion.div>
         </motion.div>
-      </section>
 
-      {/* ==================== ABOUT SECTION ==================== */}
-      <About />
+        {/* Dynamic Light Rays Background (Fixed) */}
+        <div className="fixed inset-0 z-0 opacity-50 pointer-events-none">
+          <LightRays
+            raysOrigin="top-center"
+            raysColor="#666666"
+            raysSpeed={0.5}
+            lightSpread={1.5}
+            fadeDistance={0.8}
+            followMouse={true}
+            noiseAmount={0.2}
+          />
+        </div>
 
-      {/* ==================== EXPERIENCES SECTION ==================== */}
-      <Experiences onScrollPastEdge={handleCarouselEdge} />
+        {/* ==================== HERO SECTION ==================== */}
+        <section
+          ref={heroRef}
+          id="hero"
+          className="snap-start relative min-h-[100dvh] w-full flex flex-col items-center justify-end overflow-hidden"
+        >
+          <motion.div
+            style={{
+              opacity: heroOpacity,
+              scale: heroScale,
+              filter: useTransform(heroBlur, (v) => `blur(${v}px)`),
+            }}
+            className="absolute inset-0 flex flex-col items-center justify-end"
+          >
+            {/* Scrolling Background Text */}
+            <div className="absolute top-[52%] left-0 w-full -translate-y-1/2 z-10 select-none overflow-hidden flex flex-col items-center justify-center whitespace-nowrap space-y-2">
+              <ScrollVelocity
+                texts={[
+                  "İbrahim Ethem Kurt  •  İbrahim Ethem Kurt  •  İbrahim Ethem Kurt  •  İbrahim Ethem Kurt  •",
+                  "Digital Marketing • Community Management • Project Management  •"
+                ]}
+                velocity={30}
+                numCopies={6}
+                parallaxClassName="relative overflow-hidden w-full"
+                scrollerClassName="flex whitespace-nowrap text-center drop-shadow-sm"
+                className="noto-serif-dives-akuru-regular text-[40px] tracking-normal leading-normal pointer-events-none opacity-40 shrink-0"
+              />
+            </div>
 
-      {/* ==================== PROJECTS SECTION ==================== */}
-      <Projects />
+            {/* Center Image */}
+            <motion.div
+              initial={{ opacity: 0, filter: "blur(20px)" }}
+              animate={{ opacity: 1, filter: "blur(0px)" }}
+              transition={{ duration: 1.2, ease: 'easeOut', delay: 0.1 }}
+              className="relative z-20 flex justify-center items-end"
+            >
+              <img
+                src={profilePic}
+                alt="İbrahim Ethem Kurt"
+                className="h-[75vh] w-auto object-contain object-bottom drop-shadow-2xl grayscale"
+                draggable="false"
+              />
+            </motion.div>
+          </motion.div>
+        </section>
 
-      {/* ==================== CONTACT SECTION ==================== */}
-      <Contact />
+        {/* ==================== ABOUT SECTION ==================== */}
+        <About />
 
-    </main>
+        {/* ==================== EXPERIENCES SECTION ==================== */}
+        <Experiences onScrollPastEdge={handleCarouselEdge} />
+
+        {/* ==================== PROJECTS SECTION ==================== */}
+        <Projects />
+
+        {/* ==================== CONTACT SECTION ==================== */}
+        <Contact />
+
+      </main>
     </ErrorBoundary>
   );
 }
